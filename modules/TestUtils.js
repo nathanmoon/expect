@@ -1,13 +1,14 @@
 import isRegExp from 'is-regex'
 import whyNotStrictlyEqual from 'is-equal/why'
 import objectKeys from 'object-keys'
+import { ANY } from './assert'
 
 /**
  * Returns the reason why the given arguments are not *conceptually*
  * equal, if any; the empty string otherwise.
  */
 export const whyNotEqual = (a, b) =>
-  (a == b ? '' : whyNotStrictlyEqual(a, b)) // eslint-disable-line eqeqeq
+  ((a == b || b === ANY) ? '' : whyNotStrictlyEqual(a, b)) // eslint-disable-line eqeqeq
 
 /**
  * Returns true if the given arguments are *conceptually* equal.

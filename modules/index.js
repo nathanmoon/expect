@@ -1,6 +1,6 @@
 import Expectation from './Expectation'
 import { createSpy, spyOn, isSpy, restoreSpies } from './SpyUtils'
-import assert from './assert'
+import assert, { ANY } from './assert'
 import extend from './extend'
 
 function expect(actual) {
@@ -13,5 +13,6 @@ expect.isSpy = isSpy
 expect.restoreSpies = restoreSpies
 expect.assert = assert
 expect.extend = extend
+expect.ANY = ANY
 
 module.exports = expect

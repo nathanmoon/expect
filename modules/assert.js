@@ -16,4 +16,6 @@ const assert = (condition, createMessage, ...extraArgs) => {
   throw new Error(message)
 }
 
+export const ANY = {}
+
 export default assert
