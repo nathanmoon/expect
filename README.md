@@ -357,6 +357,12 @@ Asserts the given `spy` function has been called with the expected arguments.
 expect(spy).toHaveBeenCalledWith('foo', 'bar')
 ```
 
+Pass `expect.ANY` for parameters that should be ignored.
+
+```js
+expect(spy).toHaveBeenCalledWith('foo', expect.ANY, 'bar')
+```
+
 ## Chaining Assertions
 
 Every assertion returns an `Expectation` object, so you can chain assertions together.
