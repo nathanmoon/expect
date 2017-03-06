@@ -62,6 +62,27 @@ describe('A function that was spied on', () => {
     expect(spy).toHaveBeenCalledWith('some', ANY)
   })
 
+  it('handles fewer expected args', () => {
+    try {
+      expect(spy).toHaveBeenCalledWith('some')
+    } catch (err) {
+      expect(err.message).toMatch('spy was never called with')
+    }
+  })
+
+  it('handles too many expected args', () => {
+    try {
+      expect(spy).toHaveBeenCalledWith('some', 'args', ANY)
+    } catch (err) {
+      expect(err.message).toMatch('spy was never called with')
+    }
+    try {
+      expect(spy).toHaveBeenCalledWith('some', 'args', 'more')
+    } catch (err) {
+      expect(err.message).toMatch('spy was never called with')
+    }
+  })
+
   it('rejects a faked ANY arg', () => {
     try {
       expect(spy).toHaveBeenCalledWith('some', {})
