@@ -1,12 +1,12 @@
 import expect, { spyOn, ANY } from '../index'
 
 describe('A function that was spied on', () => {
-  const video = {
-    play: () => {}
-  }
+  let spy, video
 
-  let spy
   beforeEach(() => {
+    video = {
+      play: () => {}
+    }
     spy = spyOn(video, 'play')
     video.play('some', 'args')
   })
@@ -42,20 +42,12 @@ describe('A function that was spied on', () => {
     expect(spy).toHaveBeenCalledWith()
   })
 
-  it('rejects a bad arg', () => {
-    try {
-      expect(spy).toHaveBeenCalledWith('some', 'wrong')
-    } catch (err) {
-      expect(err.message).toMatch('spy was never called with')
-    }
+  it('rejects missing args', () => {
+    expect(() => { expect(spy).toHaveBeenCalledWith() }).toThrow('spy was never called with')
   })
 
-  it('rejects missing args', () => {
-    try {
-      expect(spy).toHaveBeenCalledWith()
-    } catch (err) {
-      expect(err.message).toMatch('spy was never called with')
-    }
+  it('rejects a bad arg', () => {
+    expect(() => { expect(spy).toHaveBeenCalledWith('some', 'wrong') }).toThrow('spy was never called with')
   })
 
   it('was called with an ignored arg', () => {
@@ -63,32 +55,16 @@ describe('A function that was spied on', () => {
   })
 
   it('handles fewer expected args', () => {
-    try {
-      expect(spy).toHaveBeenCalledWith('some')
-    } catch (err) {
-      expect(err.message).toMatch('spy was never called with')
-    }
+    expect(() => { expect(spy).toHaveBeenCalledWith('some') }).toThrow('spy was never called with')
   })
 
   it('handles too many expected args', () => {
-    try {
-      expect(spy).toHaveBeenCalledWith('some', 'args', ANY)
-    } catch (err) {
-      expect(err.message).toMatch('spy was never called with')
-    }
-    try {
-      expect(spy).toHaveBeenCalledWith('some', 'args', 'more')
-    } catch (err) {
-      expect(err.message).toMatch('spy was never called with')
-    }
+    expect(() => { expect(spy).toHaveBeenCalledWith('some', 'args', ANY) }).toThrow('spy was never called with')
+    expect(() => { expect(spy).toHaveBeenCalledWith('some', 'args', 'more') }).toThrow('spy was never called with')
   })
 
   it('rejects a faked ANY arg', () => {
-    try {
-      expect(spy).toHaveBeenCalledWith('some', {})
-    } catch (err) {
-      expect(err.message).toMatch('spy was never called with')
-    }
+    expect(() => { expect(spy).toHaveBeenCalledWith('some', {}) }).toThrow('spy was never called with')
   })
 
   it('can be restored', () => {

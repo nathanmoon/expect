@@ -16,6 +16,9 @@ const assert = (condition, createMessage, ...extraArgs) => {
   throw new Error(message)
 }
 
-export const ANY = {}
+const anyClass = () => {}
+anyClass.prototype.toString = anyClass.prototype.inspect = () => 'ANY'
+const ANY = new anyClass()
+export { ANY }
 
 export default assert
