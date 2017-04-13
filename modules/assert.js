@@ -16,9 +16,11 @@ const assert = (condition, createMessage, ...extraArgs) => {
   throw new Error(message)
 }
 
-const anyClass = () => {}
-anyClass.prototype.toString = anyClass.prototype.inspect = () => 'ANY'
-const ANY = new anyClass()
+const ANY = { inspect() { return 'ANY' }, toString() { return 'ANY' } }
+if (Object.defineProperty) { Object.defineProperty(ANY, 'inspect', { enumerable: false }) }
+if (Object.defineProperty) { Object.defineProperty(ANY, 'toString', { enumerable: false }) }
+if (Object.setPrototypeOf) { Object.setPrototypeOf(ANY, null) }
+if (Object.freeze) { Object.freeze(ANY) }
 export { ANY }
 
 export default assert
